@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Server</title>
+    <style>
+        body{
+            background-color: antiquewhite;
+            margin-top: 7%;
+            margin-left: 15%;
+            
+        }
+        #top{
+            text-align: center;
+            font-size: 79px;
+            color: brown;
+        }
+        #a,#b,#c{
+            font-size: 49px;
+        }
+        button{
+            color: rgb(12, 243, 116);
+        }
+        
+    </style>
+</head>
+<body>
+    <h1 id="top">Mock Server </h1>
+    <br>
+    <h1 id="a">Add Product</h1>
+    <div>
+    <input type="number" id="id" placeholder="id">
+    <input type="text" id="name" placeholder="Name">
+    <input type="number" id="price" placeholder="Price">
+    <button onclick="addProduct()">Add Product</button>
+    </div>
+    <div>
+        <h1 id="b">Delete Product</h1>
+        <input type="number" id="product_id" placeholder="id">
+        <button onclick="deleteProduct()">Delete Product</button>
+    </div>
+
+    <h1 id="c">Update Product</h1>
+    <div>
+    <input type="number" id="id1" placeholder="id">
+    <input type="text" id="name1" placeholder="Name">
+    <input type="number" id="price1" placeholder="Price">
+    <button onclick="updateProduct()">Update Product</button>
+    </div>
+</body>
+<script>
+
+    async function getData() {
+        let res= await fetch(`http://localhost:5000/api/products`);
+        let data = await res.json();
+        console.log('data:', data);
+    }
+    getData()
+
+
+    async function addProduct() {
+        let data= {
+            id:document.getElementById("id").value,
+            name:document.getElementById("name").value,
+            price:document.getElementById("price").value,
+        };
+        try{
+
+        let res=await fetch(`http://localhost:5000/api/products`,{
+            method:"POST",
+            body:JSON.stringify(data),
+            headers: {
+                "Content-type":"application/json",
+            }
+        }) 
+           
+        let d= await res.json();
+        console.log('d:', d);
+
+        }
+        catch(e) {
+            console.log('e:', e);
+
+        }
+
+
+    }
+
+    async function deleteProduct() {
+
+
+        let id=document.getElementById("product_id").value;
+        let res=await fetch(`http://localhost:5000/api/products/${id}`,{
+            method:"DELETE",
+            headers: {
+                "Content-type":"application/json",
+            }
+        })
+
+    }
+
+
+
+
+
+
+    async function updateProduct() {
+        let data= {
+            id:document.getElementById("id1").value,
+            name:document.getElementById("name1").value,
+            price:document.getElementById("price1").value,
+        };
+        let id=document.getElementById("id1").value;
+        try{
+
+        let res=await fetch(`http://localhost:5000/api/products/${id}`,{
+            method:"PUT",
+            body:JSON.stringify(data),
+            headers: {
+                "Content-type":"application/json",
+            }
+        }) 
+           
+        let d= await res.json();
+        console.log('d:', d);
+
+        }
+        catch(e) {
+            console.log('e:', e);
+
+        }
+
+
+    }
+</script>
+</html>
