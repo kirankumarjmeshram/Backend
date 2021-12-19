@@ -53,7 +53,7 @@
 <script>
 
     async function getData() {
-        let res= await fetch(`http://localhost:5000/api/products`);
+        let res= await fetch(`http://localhost:6000/api/products`);
         let data = await res.json();
         console.log('data:', data);
     }
@@ -68,7 +68,7 @@
         };
         try{
 
-        let res=await fetch(`http://localhost:5000/api/products`,{
+        let res=await fetch(`http://localhost:6000/api/products`,{
             method:"POST",
             body:JSON.stringify(data),
             headers: {
@@ -92,7 +92,7 @@
 
 
         let id=document.getElementById("product_id").value;
-        let res=await fetch(`http://localhost:5000/api/products/${id}`,{
+        let res=await fetch(`http://localhost:6000/api/products/${id}`,{
             method:"DELETE",
             headers: {
                 "Content-type":"application/json",
@@ -115,7 +115,7 @@
         let id=document.getElementById("id1").value;
         try{
 
-        let res=await fetch(`http://localhost:5000/api/products/${id}`,{
+        let res=await fetch(`http://localhost:6000/api/products/${id}`,{
             method:"PUT",
             body:JSON.stringify(data),
             headers: {
